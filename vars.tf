@@ -7,7 +7,7 @@ variable "min_size" {}
 variable "max_size" {}
 variable "subnets" {}
 variable "vpc_id" {}
-#variable "bastion_cidr" {}
+variable "bastion_cidr" {}
 #variable "allow_app_to" {}
 #variable "port" {}
 

@@ -11,7 +11,7 @@ resource "aws_launch_template" "main" {
   }
 
   instance_type          = var.instance_type
-#  vpc_security_group_ids = [aws_security_group.main.id]
+   vpc_security_group_ids = [aws_security_group.main.id]
 
   tag_specifications {
     resource_type = "instance"
@@ -46,19 +46,19 @@ resource "aws_autoscaling_group" "main" {
   }
 }
 
-#resource "aws_security_group" "main" {
-#  name        = "${var.component}-${var.env}"
-#  description = "${var.component}-${var.env}"
-#  vpc_id      = var.vpc_id
-#
-#  ingress {
-#    description = "SSH"
-#    from_port   = 22
-#    to_port     = 22
-#    protocol    = "tcp"
-#    cidr_blocks = var.bastion_cidr
-#  }
-#
+resource "aws_security_group" "main" {
+  name        = "${var.component}-${var.env}"
+  description = "${var.component}-${var.env}"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.bastion_cidr
+  }
+
 #  ingress {
 #    description = "APP"
 #    from_port   = var.port
@@ -66,17 +66,17 @@ resource "aws_autoscaling_group" "main" {
 #    protocol    = "tcp"
 #    cidr_blocks = var.allow_app_to
 #  }
-#
-#  egress {
-#    from_port        = 0
-#    to_port          = 0
-#    protocol         = "-1"
-#    cidr_blocks      = ["0.0.0.0/0"]
-#    ipv6_cidr_blocks = ["::/0"]
-#  }
-#
-#  tags = merge(
-#    var.tags,
-#    { Name = "${var.component}-${var.env}" }
-#  )
-#}
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = merge(
+    var.tags,
+    { Name = "${var.component}-${var.env}" }
+  )
+}
